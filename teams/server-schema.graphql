@@ -1,0 +1,82 @@
+# --- Server schema ---
+
+schema {
+  # The query root of Teams' GraphQL interface.
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  # @param userId - user ID
+  # @return - user with given ID
+  user(userId: ID!): User
+  # @param filter - filter to filter the users by
+  # @return - list of users having a display name or upn containing the filter provided
+  users(filter: String): [User]
+  # @param convId - conversation ID to search by
+  # @return - list of messages within the conversaton having the provided ID
+  messages(convId: ID!): [Message]
+  # @return - list of all 1:1 conversations for the current user
+  chats: [Conversation]
+  # @param convId - conversation ID to search by
+  # @return - 1:1 conversaton having the privided ID
+  chat(convId: ID!): Conversation
+  # @param userId - user ID to search by
+  # @return - 1:1 conversation having only 2 members; one of which is the provided user
+  chatWithUser(userId: ID!): Conversation
+}
+
+type Mutation {
+  # @param convId - conversation ID to attach the message to
+  # @param text - text of the message
+  # @return - message sent having the privided ID
+  sendTextMessage(convId: ID!, text: String!): Message
+  # @param userId - user ID to start the conversation with
+  # @param text - text of the message
+  # @return - 1:1 conversaton having the privided ID
+  sendMessageToUser(userId: ID!, text: String!): Conversation
+}
+
+type Conversation {
+  # @server
+  id: ID!
+  lastMessage: Message
+  title: String
+  isOneOnOne: Boolean
+  members: [User]
+  isRead: Boolean
+}
+
+type Message {
+  id: ID
+  content: String
+  originalArrivalTime: String
+  imDisplayName: String
+  from: ID
+  messageType: String
+  contentType: String
+  activityType: String
+  clientMessageId: String
+}
+
+type User {
+  id: ID!
+  displayName: String
+  email: String
+  department: String
+  givenName: String
+  isEnabled: Boolean
+  isMuted: Boolean
+  jobTitle: String
+  mail: String
+  mobile: String
+  role: String
+  physicalDeliveryOfficeName: String
+  sipProxyAddress: String
+  surname: String
+  telephoneNumber: String
+  type: String
+  userSubType: String
+  userPrincipalName: String
+  userType: String
+}

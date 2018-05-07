@@ -1,0 +1,33 @@
+{{#each scalars}}
+{{ toComment description }}
+export type {{ name }} = any;
+
+{{/each}}
+
+{{#each interfaces}}
+  {{~> type }}
+
+{{/each}}
+{{#each types}}
+  {{~> type }}
+
+{{/each}}
+{{#each inputTypes}}
+  {{~> type }}
+
+{{/each}}
+
+{{#each enums}}
+{{ toComment description }}
+export enum {{ name }} {
+  {{#each values }}{{value}} = "{{ value }}",{{#unless @last}}
+  {{/unless}}{{/each}}
+}
+
+{{/each}}
+
+{{#each unions}}
+{{ toComment description }}
+export type {{ name }} = {{#each possibleTypes}}{{this}}{{#unless @last}} | {{/unless}}{{/each}};
+
+{{/each}}

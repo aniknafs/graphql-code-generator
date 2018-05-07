@@ -210,15 +210,18 @@ function handleInterface(
   fileExtension: string,
   prefixAndPath = ''
 ): FileOutput[] {
-  debugLog(`[handleInterface] called`);
+  debugLog(`[handleInterface] called... ${prefixAndPath}`);
 
-  return schemaContext.interfaces.map((inf: Interface) => ({
-    filename: prefixAndPath + sanitizeFilename(inf.name, 'interface') + '.' + (fileExtension || ''),
-    content: compiledTemplate({
-      ...inf,
-      config: extraConfig
-    })
-  }));
+  return schemaContext.interfaces.map((inf: Interface) => {
+    debugLog(`[handleInterface] called... ${inf}`);
+    return {
+      filename: prefixAndPath + sanitizeFilename(inf.name, 'interface') + '.' + (fileExtension || ''),
+      content: compiledTemplate({
+        ...inf,
+        config: extraConfig
+      })
+    };
+  });
 }
 
 function handleOperation(
@@ -229,10 +232,10 @@ function handleOperation(
   fileExtension: string,
   prefixAndPath = ''
 ): FileOutput[] {
-  debugLog(`[handleOperation] called`);
+  debugLog(`[handleOperation] called ${prefixAndPath}`);
 
   return documents.operations.map((operation: Operation) => ({
-    filename: prefixAndPath + sanitizeFilename(operation.name, operation.operationType) + '.' + (fileExtension || ''),
+    filename: prefixAndPath + sanitizeFilename(operation.name, null, true) + '.' + (fileExtension || ''),
     content: compiledTemplate({
       ...operation,
       config: extraConfig
@@ -251,7 +254,7 @@ function handleFragment(
   debugLog(`[handleFragment] called`);
 
   return documents.fragments.map((fragment: Fragment) => ({
-    filename: prefixAndPath + sanitizeFilename(fragment.name, 'fragment') + '.' + (fileExtension || ''),
+    filename: prefixAndPath + sanitizeFilename(fragment.name, null, true) + '.' + (fileExtension || ''),
     content: compiledTemplate({
       ...fragment,
       config: extraConfig

@@ -1,0 +1,60 @@
+query chatList {
+  chats {
+    ...chatFields
+  }
+}
+
+fragment chatFields on Conversation {
+  id
+  title
+  lastMessage {
+    ...messageFields
+  }
+  members {
+    ...userFields
+  }
+  isRead
+
+  activeCallsCount @client
+  botBlockString @client
+  datatid @client
+  displayName @client
+  hasActiveCalls @client
+  hasFailedMessages @client
+  otherMemberMris @client #no mris
+  isSfB @client
+  isNewChat @client
+  isBotBlocked @client
+  isBotUser @client
+  isFederated @client
+  isHidden @client
+  pictureUpn @client
+  pinnedIndex @client
+  showAtMention @client
+  showMarkers @client
+  tooltipTitle @client
+  longTitle @client
+  messagePreview @client
+  messagePreviewAria @client
+  pictureGroup @client {
+    userId
+    displayName
+  }
+  isLastMessageText @client
+  isLastMessageTime @client
+  isMeeting @client
+}
+
+fragment messageFields on Message {
+  content
+  originalArrivalTime
+  imDisplayName
+  from
+  id
+}
+
+fragment userFields on User {
+  id
+  displayName
+  givenName
+}

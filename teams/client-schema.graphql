@@ -1,0 +1,38 @@
+# --- Client schema ---
+# Containes fields that are not present in the server scheme
+# such as fields tagged with @client
+
+type Conversation {
+  # @client
+  activeCallsCount: Int
+  botBlockString: String
+  datatid: String
+  displayName: String
+  hasActiveCalls: Boolean
+  hasFailedMessages: Boolean
+  otherMemberMris: [String]
+  pictureGroup: [PictureGroup]
+  isSfB: Boolean
+  isNewChat: Boolean
+  isBotBlocked: Boolean
+  isBotUser: Boolean
+  isFederated: Boolean
+  isHidden: Boolean
+  pictureUpn: String
+  pinnedIndex: Int
+  showAtMention: Boolean
+  showMarkers: Boolean
+  tooltipTitle: String
+  longTitle: String
+  messagePreview: String
+  messagePreviewAria: String
+
+  isLastMessageText: Boolean
+  isLastMessageTime: String
+  isMeeting: Boolean
+}
+
+type PictureGroup {
+  userId: String
+  displayName: String
+}

@@ -1,0 +1,34 @@
+{{!-- operations --}}
+{{#each operations }}
+export type I{{ toPascalCase name }}Variables = {
+{{#each variables}}
+  {{ name }}{{#unless isRequired}}?{{/unless}}: {{ toPrimitive type }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}};
+{{/each}}
+}
+
+export type {{ toPascalCase name }}{{ toPascalCase operationType }} ={{#if hasFields}} {
+  {{> selectionSet fields }}
+}{{/if}}{{> fragments this }}
+
+{{#each innerModels }}
+export type {{ modelType }} ={{#if hasFields}} {
+  {{> selectionSet fields }}
+}{{/if}}{{> fragments this }}
+
+{{/each}}
+{{/each}} 
+{{!-- operations --}}
+
+{{#each fragments }}
+export type {{ toPascalCase name}} ={{#if hasFields}} {
+  {{> selectionSet fields }}
+}{{/if}}{{> fragments this }}
+
+{{#each innerModels }}
+export type {{ modelType }} ={{#if hasFields}} {
+  {{> selectionSet fields }}
+}{{/if}}{{> fragments this }}
+{{/each}}
+
+{{/each}}
+

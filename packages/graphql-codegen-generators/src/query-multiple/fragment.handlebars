@@ -1,0 +1,16 @@
+{{#eachImport this }}
+import { I{{ toPascalCase name }} } from './{{ file }}.interface';
+{{/eachImport}}
+
+export interface I{{ toPascalCase name }} {
+  {{> selectionSet fields }}
+}{{> fragments this }}
+
+{{#each innerModels }}
+export type {{ modelType }} = {{#unless fields}}{{> fragments this }};{{/unless}}
+{{#if fields}}{
+  {{> selectionSet fields }}
+}{{/if}}
+
+
+{{/each}}

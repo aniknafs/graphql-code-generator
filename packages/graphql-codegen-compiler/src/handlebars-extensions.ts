@@ -26,6 +26,10 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
     return config.primitives[type] || type || '';
   });
 
+  registerHelper('isPrimitive', function(type) {
+    return config.primitives[type] ? true : false;
+  });
+
   registerHelper('stringify', function(obj) {
     return new SafeString(JSON.stringify(obj));
   });
@@ -99,7 +103,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
           }
 
           const fieldType = getFieldTypeAsString(field);
-          const file = sanitizeFilename(field.type, fieldType);
+          const file = sanitizeFilename(field.type, null, true);
 
           if (!imports.find(t => t.name === field.type)) {
             imports.push({ name: field.type, file, type: fieldType });
@@ -111,7 +115,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
           field.arguments.forEach((arg: Argument) => {
             if (!config.primitives[arg.type]) {
               const fieldType = getFieldTypeAsString(arg);
-              const file = sanitizeFilename(arg.type, fieldType);
+              const file = sanitizeFilename(arg.type, null, true);
 
               if (!imports.find(t => t.name === arg.type)) {
                 imports.push({ name: arg.type, file, type: fieldType });
@@ -125,7 +129,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
     // Types that uses interfaces
     if (context.interfaces) {
       context.interfaces.forEach((infName: string) => {
-        const file = sanitizeFilename(infName, 'interface');
+        const file = sanitizeFilename(infName, null, true);
 
         if (!imports.find(t => t.name === infName)) {
           imports.push({ name: infName, file, type: 'interface' });
@@ -136,7 +140,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
     // Unions
     if (context.possibleTypes) {
       context.possibleTypes.forEach((possibleType: string) => {
-        const file = sanitizeFilename(possibleType, 'type');
+        const file = sanitizeFilename(possibleType, null, true);
 
         if (!imports.find(t => t.name === possibleType)) {
           imports.push({ name: possibleType, file, type: 'type' });
@@ -148,7 +152,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
       context.variables.forEach((variable: Variable) => {
         if (!config.primitives[variable.type]) {
           const fieldType = getFieldTypeAsString(variable);
-          const file = sanitizeFilename(variable.type, fieldType);
+          const file = sanitizeFilename(variable.type, null, true);
 
           if (!imports.find(t => t.name === variable.type)) {
             imports.push({ name: variable.type, file, type: fieldType });
@@ -163,7 +167,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
       flattenDocument.innerModels.forEach((innerModel: FlattenModel) => {
         if (innerModel.fragmentsSpread && innerModel.fragmentsSpread.length > 0) {
           innerModel.fragmentsSpread.forEach((fragmentSpread: SelectionSetFragmentSpread) => {
-            const file = sanitizeFilename(fragmentSpread.fragmentName, 'fragment');
+            const file = sanitizeFilename(fragmentSpread.fragmentName, null, true);
 
             if (!imports.find(t => t.name === fragmentSpread.fragmentName)) {
               imports.push({ name: fragmentSpread.fragmentName, file, type: 'fragment' });
@@ -172,6 +176,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
         }
 
         innerModel.fields.forEach((field: SelectionSetFieldNode) => {
+          console.log('field: ', field, field.type);
           if (!config.primitives[field.type]) {
             let type = null;
 
@@ -184,7 +189,7 @@ export const initHelpers = (config: GeneratorConfig, schemaContext: SchemaTempla
             }
 
             if (type !== null) {
-              const file = sanitizeFilename(field.type, type);
+              const file = sanitizeFilename(field.type, null, true);
 
               if (!imports.find(t => t.name === field.type)) {
                 imports.push({ name: field.type, file, type });

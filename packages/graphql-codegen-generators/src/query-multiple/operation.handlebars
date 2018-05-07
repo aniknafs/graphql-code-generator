@@ -1,0 +1,21 @@
+{{#eachImport this }}
+import { I{{ toPascalCase name }} } from './{{ file }}.interface';
+{{/eachImport}}
+
+{{~#if variables}}
+export interface I{{ toPascalCase name }}Variables {
+  {{#each variables}}
+  {{ name }}{{#unless isRequired}}?{{/unless}}: {{ toPrimitive type }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}};
+  {{/each}}
+}{{/if}}
+
+export interface I{{ toPascalCase name }}{{ toPascalCase operationType }}{{#if hasFields}} {
+  {{> selectionSet fields }}
+}{{/if}}{{> fragments this }}
+
+{{#each innerModels }}
+export type {{ modelType }} ={{#if hasFields}} {
+  {{> selectionSet fields }}
+}{{/if}}{{> fragments this }}
+
+{{/each}}
