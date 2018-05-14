@@ -3,6 +3,7 @@ import { I{{ toPascalCase name }} } from './{{ file }}.interface';
 {{/eachImport}}
 
 export interface I{{ toPascalCase name }} {
+   __typename?: "{{ onType }}";
   {{> selectionSet fields }}
 }{{> fragments this }}
 
