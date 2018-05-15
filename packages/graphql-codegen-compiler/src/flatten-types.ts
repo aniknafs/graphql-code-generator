@@ -35,8 +35,7 @@ function buildModelFromField(field: SelectionSetFieldNode, result: FlattenModel[
 }
 
 function buildModelFromInlineFragment(fragment: SelectionSetInlineFragment, result: FlattenModel[]): FlattenModel {
-  const modelName = handleNameDuplications(pascalCase(fragment.onType) + 'InlineFragment', result);
-
+  const modelName = handleNameDuplications(pascalCase(fragment.onType), result);
   return {
     schemaBaseType: fragment.onType,
     modelType: modelName,
@@ -45,7 +44,8 @@ function buildModelFromInlineFragment(fragment: SelectionSetInlineFragment, resu
     inlineFragments: fragment.inlineFragments,
     hasFields: fragment.hasFields,
     hasFragmentsSpread: fragment.hasFragmentsSpread,
-    hasInlineFragments: fragment.hasInlineFragments
+    hasInlineFragments: fragment.hasInlineFragments,
+    isInlineFragment: fragment.isInlineFragment
   };
 }
 

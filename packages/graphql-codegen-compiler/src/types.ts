@@ -38,6 +38,7 @@ export interface FlattenModel {
   hasFragmentsSpread: boolean;
   hasFields: boolean;
   hasInlineFragments: boolean;
+  isInlineFragment?: boolean;
 }
 
 export interface Settings {
