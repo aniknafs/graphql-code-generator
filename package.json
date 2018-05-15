@@ -13,7 +13,7 @@
     "lint": "lerna run lint",
     "precommit": "lint-staged",
     "prerelease": "yarn build && yarn test",
-    "release": "lerna publish --exact --force-publish=\"*\""
+    "release": "lerna publish --exact --force-publish=\"*\" --canary=beta"
   },
   "workspaces": ["packages/*"],
   "dependencies": {
