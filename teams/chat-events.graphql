@@ -1,0 +1,24 @@
+subscription chatServiceEvent {
+  chatServiceEvent {
+    ... on NewMessage {
+      convId
+      message {
+        ...messageFields
+      }
+    }
+    ... on MessageUpdate {
+      message {
+        ...messageFields
+      }
+    }
+  }
+}
+
+fragment messageFields on Message {
+  content
+  originalArrivalTime
+  imDisplayName
+  id
+  from
+  messageType
+}

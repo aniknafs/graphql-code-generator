@@ -15,6 +15,7 @@ export interface I{{ toPascalCase name }}{{ toPascalCase operationType }}{{#if h
 
 {{#each innerModels }}
 export type {{ modelType }} ={{#if hasFields}} {
+  {{#if isInlineFragment}}__typename: "{{ modelType }}";{{/if}}
   {{> selectionSet fields }}
 }{{/if}}{{> fragments this }}
 
