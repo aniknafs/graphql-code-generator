@@ -22,7 +22,7 @@ const config: GeneratorConfig = {
     selectionSet,
     fragments
   },
-  flattenTypes: true,
+  flattenTypes: false,
   primitives: {
     String: 'string',
     Int: 'number',
