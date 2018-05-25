@@ -156,7 +156,7 @@ function handleUnion(
   debugLog(`[handleUnion] called`);
 
   return schemaContext.unions.map((union: Union) => ({
-    filename: prefixAndPath + sanitizeFilename(union.name, 'union') + '.' + (fileExtension || ''),
+    filename: prefixAndPath + sanitizeFilename(union.name, 'union', true) + '.' + (fileExtension || ''),
     content: compiledTemplate({
       ...union,
       config: extraConfig
@@ -175,7 +175,7 @@ function handleEnum(
   debugLog(`[handleEnum] called`);
 
   return schemaContext.enums.map((en: Enum) => ({
-    filename: prefixAndPath + sanitizeFilename(en.name, 'enum') + '.' + (fileExtension || ''),
+    filename: prefixAndPath + sanitizeFilename(en.name, 'enum', true) + '.' + (fileExtension || ''),
     content: compiledTemplate({
       ...en,
       config: extraConfig

@@ -3,6 +3,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function sanitizeFilename(name, graphQlType, isDashCased) {
   var cleanName;
   if (isDashCased) {
+    name = name[0].toLowerCase() + name.substring(1);
     cleanName = name.replace(/([A-Z])/g, function(g) {
       return '-' + g[0].toLowerCase();
     });

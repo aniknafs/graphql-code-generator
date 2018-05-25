@@ -112,7 +112,7 @@ function handleUnion(compiledTemplate, schemaContext, documents, extraConfig, fi
   return schemaContext.unions.map(function(union) {
     return {
       filename:
-        prefixAndPath + sanitizie_filename_1.sanitizeFilename(union.name, 'union') + '.' + (fileExtension || ''),
+        prefixAndPath + sanitizie_filename_1.sanitizeFilename(union.name, 'union', true) + '.' + (fileExtension || ''),
       content: compiledTemplate(__assign({}, union, { config: extraConfig }))
     };
   });
@@ -124,7 +124,8 @@ function handleEnum(compiledTemplate, schemaContext, documents, extraConfig, fil
   graphql_codegen_core_1.debugLog('[handleEnum] called');
   return schemaContext.enums.map(function(en) {
     return {
-      filename: prefixAndPath + sanitizie_filename_1.sanitizeFilename(en.name, 'enum') + '.' + (fileExtension || ''),
+      filename:
+        prefixAndPath + sanitizie_filename_1.sanitizeFilename(en.name, 'enum', true) + '.' + (fileExtension || ''),
       content: compiledTemplate(__assign({}, en, { config: extraConfig }))
     };
   });
